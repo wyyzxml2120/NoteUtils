@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">麋鹿工具箱</string>
+    <string name="title_home">资讯</string>
+    <string name="title_dashboard">工具箱</string>
+    <string name="title_notifications">个人</string>
+
+    <string name="home_times">请输入随机次数:</string>
+    <string name="home_times_tips">随机生成必要参数</string>
+    <string name="home_number">请输入电话号码:</string>
+    <string name="home_number_tips">请输入电话号码，以*号间隔</string>
+    <string name="home_random_create">随机生成</string>
+    <string name="home_nums_create">输入生成</string>
+
+    <string name="home_nums_title">通话记录生成器</string>
+
+    <string name="noti_vertify_code">验证授权码</string>
+    <string name="noti_code">请输入授权码</string>
+
+</resources>
