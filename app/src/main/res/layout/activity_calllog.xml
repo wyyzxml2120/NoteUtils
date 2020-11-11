@@ -47,6 +47,31 @@
         app:layout_constraintEnd_toEndOf="@id/bar"/>
 
     <TextView
+        android:id="@+id/tvAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:text="@string/home_address"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bar"/>
+
+    <TextView
+        android:id="@+id/edtAddress"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="25dp"
+        android:background="@drawable/white_bg"
+        android:gravity="center"
+        android:text="成都市"
+        android:onClick="@{() -> click.selectCity()}"
+        app:layout_constraintTop_toTopOf="@id/tvAddress"
+        app:layout_constraintBottom_toBottomOf="@id/tvAddress"
+        app:layout_constraintStart_toEndOf="@id/tvAddress"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
         android:id="@+id/tv1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,7 +79,7 @@
         android:layout_marginTop="50dp"
         android:text="@string/home_times"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bar"/>
+        app:layout_constraintTop_toBottomOf="@id/tvAddress"/>
 
     <EditText
         android:id="@+id/edtTimes"

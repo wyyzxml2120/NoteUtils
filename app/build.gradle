@@ -20,6 +20,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    android {
+        useLibrary 'org.apache.http.legacy'
+    }
+
     buildFeatures{
         dataBinding = true
     }
@@ -58,5 +62,22 @@ dependencies {
     implementation 'androidx.room:room-ktx:' + roomVersion
     implementation 'androidx.room:room-rxjava2:' + roomVersion
     implementation 'androidx.room:room-guava:' + roomVersion
+
+
+    implementation 'cn.bmob.android:bmob-sdk:3.7.8'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.8"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.14.1'
+    implementation 'com.squareup.okio:okio:2.2.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    //读取excel
+    implementation 'org.apache.poi:poi:3.17'
+    implementation 'org.apache.poi:poi-ooxml:3.17'
+    implementation 'org.apache.xmlbeans:xmlbeans:3.1.0'
+    implementation 'stax:stax:1.2.0'
+
+    //地区选择器
+    implementation 'liji.library.dev:citypickerview:5.2.2'
 
 }

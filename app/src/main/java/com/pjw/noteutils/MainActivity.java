@@ -15,6 +15,8 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import cn.bmob.v3.Bmob;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -38,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.WRITE_CALL_LOG}, 100);
         }
 
-        if (System.currentTimeMillis()/1000 > 1602340332){
-            System.exit(0);
-        }
+        Bmob.initialize(this, "cfa78f7cfb103da7878d6047f3478173");
+
+//        if (System.currentTimeMillis()/1000 > 1602340332){
+//            System.exit(0);
+//        }
     }
 
     @Override

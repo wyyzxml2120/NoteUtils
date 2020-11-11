@@ -18,6 +18,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.pjw.noteutils.R;
 import com.pjw.noteutils.base.BaseFragment;
+import com.pjw.noteutils.data.NotePreference;
+import com.pjw.noteutils.data.ShareConst;
 import com.pjw.noteutils.databinding.FragmentDashboardBinding;
 
 
@@ -37,7 +39,13 @@ public class DashboardFragment extends BaseFragment {
 
     public class ClickProxy {
         public void goCallLog() {
-            nav().navigate(R.id.action_DashboardFragment_to_CalllogActivity);
+            NotePreference notePreference = new NotePreference(getContext());
+            int verify = notePreference.readInt(ShareConst.IsVerifyCode);
+            if (verify == 2){
+                nav().navigate(R.id.action_DashboardFragment_to_CalllogActivity);
+            }else {
+                Toast.makeText(getActivity(), "请先验证授权码!" , Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

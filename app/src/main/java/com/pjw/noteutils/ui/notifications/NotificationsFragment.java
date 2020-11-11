@@ -24,6 +24,9 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.pjw.noteutils.R;
 import com.pjw.noteutils.base.BaseFragment;
+import com.pjw.noteutils.bean.CodeBean;
+import com.pjw.noteutils.data.NotePreference;
+import com.pjw.noteutils.data.ShareConst;
 import com.pjw.noteutils.databinding.FragmentDashboardBinding;
 import com.pjw.noteutils.databinding.FragmentNotificationsBinding;
 import com.pjw.noteutils.ui.dashboard.DashboardFragment;
@@ -32,6 +35,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.QueryListener;
+import cn.bmob.v3.listener.UpdateListener;
 
 public class NotificationsFragment extends BaseFragment {
 
@@ -60,14 +68,45 @@ public class NotificationsFragment extends BaseFragment {
                 return;
             }
 
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");// HH:mm:ss
-            //获取当前时间
-            Date date = new Date(System.currentTimeMillis());
-            if (fNotiBin.edtCode.getText().toString().equals(simpleDateFormat.format(date))){
+//            @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");// HH:mm:ss
+//            //获取当前时间
+//            Date date = new Date(System.currentTimeMillis());
+//            if (fNotiBin.edtCode.getText().toString().equals(simpleDateFormat.format(date))){
+//
+//            }else {
+//                Toast.makeText(getActivity(), "授权码错误!", Toast.LENGTH_SHORT).show();
+//            }
 
-            }else {
-                Toast.makeText(getActivity(), "授权码错误!", Toast.LENGTH_SHORT).show();
-            }
+            BmobQuery<CodeBean> bmobQuery = new BmobQuery<CodeBean>();
+            bmobQuery.getObject(fNotiBin.edtCode.getText().toString(), new QueryListener<CodeBean>() {
+                @Override
+                public void done(CodeBean object, BmobException e) {
+                    if(e==null){
+                        //成功的操作
+                        NotePreference notePreference = new NotePreference(getContext());
+                        notePreference.writeInt(ShareConst.IsVerifyCode,2);
+
+                        CodeBean p2 = new CodeBean();
+                        p2.setObjectId(fNotiBin.edtCode.getText().toString());
+                        p2.delete(new UpdateListener() {
+
+                            @Override
+                            public void done(BmobException e) {
+                                if(e==null){
+                                    Toast.makeText(getActivity(), "验证成功!" , Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(getActivity(), "验证成功!但发生未知错误" , Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                        });
+
+                    }else{
+                        Toast.makeText(getActivity(), "验证失败：" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
         }
     }
 

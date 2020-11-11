@@ -10,6 +10,8 @@
     <string name="home_number_tips">请输入电话号码，以*号间隔</string>
     <string name="home_random_create">随机生成</string>
     <string name="home_nums_create">输入生成</string>
+    <string name="home_address">请选择城市地址</string>
+    <string name="home_tips">目前只支持部分地区，新增请联系管理员</string>
 
     <string name="home_nums_title">通话记录生成器</string>
 
