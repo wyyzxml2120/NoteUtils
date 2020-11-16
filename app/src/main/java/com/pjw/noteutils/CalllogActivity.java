@@ -127,128 +127,110 @@ public class CalllogActivity extends AppCompatActivity {
                 return;
             }
 
+            if (TextUtils.isEmpty(myProvince) || TextUtils.isEmpty(myCity)){
+                Toast.makeText(CalllogActivity.this, "请选择城市!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (myProvince.equals("海南")){
+                Toast.makeText(CalllogActivity.this, "当前暂无该省份数据，请联系管理员!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            readExcel(myProvince+"省.xlsx");
             //获取地址
-            switch (myProvince){
-                case "上海省":
+//            switch (myProvince){
+//                case "上海省":
+//
+//                    break;
+//                case "云南省":
+//
+//                    break;
+//                case "内蒙古省":
+//
+//                    break;
+//                case "北京省":
+//
+//                    break;
+//                case "吉林省":
+//
+//                    break;
+//                case "四川省":
+//
+//                    break;
+//                case "天津省":
+//
+//                    break;
+//                case "宁夏省":
+//
+//                    break;
+//                case "安徽省":
+//
+//                    break;
+//                case "山东省":
+//
+//                    break;
+//                case "山西省":
+//
+//                    break;
+//                case "广东省":
+//
+//                    break;
+//                case "广西省":
+//
+//                    break;
+//                case "新疆省":
+//
+//                    break;
+//                case "江苏省":
+//
+//                    break;
+//                case "江西省":
+//
+//                    break;
+//                case "河北省":
+//
+//                    break;
+//                case "浙江省":
+//
+//                    break;
+//                case "湖北省":
+//
+//                    break;
+//                case "湖南省":
+//
+//                    break;
+//                case "甘肃省":
+//
+//                    break;
+//                case "福建省":
+//
+//                    break;
+//                case "西藏省":
+//
+//                    break;
+//                case "贵州省":
+//
+//                    break;
+//                case "辽宁省":
+//
+//                    break;
+//                case "重庆省":
+//
+//                    break;
+//                case "陕西省":
+//
+//                    break;
+//                case "青海省":
+//
+//                    break;
+//                case "黑龙江省":
+//
+//                    break;
+//                default:
+//                    Toast.makeText(CalllogActivity.this, "当前城市电话区号尚未收录，请联系管理员!", Toast.LENGTH_SHORT).show();
+//            }
 
-                    break;
-                case "云南省":
-
-                    break;
-                case "内蒙古省":
-
-                    break;
-                case "北京省":
-
-                    break;
-                case "吉林省":
-
-                    break;
-                case "四川省":
-
-                    break;
-                case "天津省":
-
-                    break;
-                case "宁夏省":
-
-                    break;
-                case "安徽省":
-
-                    break;
-                case "山东省":
-
-                    break;
-                case "山西省":
-
-                    break;
-                case "广东省":
-
-                    break;
-                case "广西省":
-
-                    break;
-                case "新疆省":
-
-                    break;
-                case "江苏省":
-
-                    break;
-                case "江西省":
-
-                    break;
-                case "河北省":
-
-                    break;
-                case "浙江省":
-
-                    break;
-                case "湖北省":
-
-                    break;
-                case "湖南省":
-
-                    break;
-                case "甘肃省":
-
-                    break;
-                case "福建省":
-
-                    break;
-                case "西藏省":
-
-                    break;
-                case "贵州省":
-
-                    break;
-                case "辽宁省":
-
-                    break;
-                case "重庆省":
-
-                    break;
-                case "陕西省":
-
-                    break;
-                case "青海省":
-
-                    break;
-                case "黑龙江省":
-
-                    break;
-                default:
-                    Toast.makeText(CalllogActivity.this, "当前城市电话区号尚未收录，请联系管理员!", Toast.LENGTH_SHORT).show();
-            }
-
-            //随机选择一个电信或其他的电话号码
-
-
-            //随机生成电话号码
-            String[] phoneHead = {"152","199","189","135","138","158","181","156","187","186","136","177",
-            "130","182","159","137","138","139","151","153","154","156","158","158","183","184","185","188","189","150","130","180"};
-            String[] phoneArea = {"2339","0280","8053","1189","0286","8091","1139","7805","2399","6384","3426","8050","2804","6320","0827","8296",
-                    "4801","1822","8212","0051","8004","8193","8251","6874","8072","1576","8016","4079","4809","0898","2807","9895","9058","8298","8013","5014",
-                    "4028","8015","1818","2881","2816","1576","0805","3089","6502","8160","8286","5807","2817","0902","8345","4101","2819","0819","2858","0838",
-                    "8085","5108","5968","8233","0807","8122"};
-
-            for (int i = 0; i<Integer.parseInt(times); i++){
-                String head = phoneHead[getRandom(32)];
-                String area = phoneArea[getRandom(62)];
-                String phone = head+area+getRandom(10)+getRandom(10)+getRandom(10)+getRandom(10);
-
-                PhoneBean phoneBean = new PhoneBean();
-                phoneBean.setNumber(phone);
-                phoneBean.setDate(nowTime);
-
-                int callTime = getRandom(180)+10;
-                phoneBean.setDuration(String.valueOf(callTime));
-                nowTime = nowTime + callTime * 1000 + 60000;
-
-                phoneBean.setType("2");
-                phoneBean.setTypenew("0");
-
-                createCallLog(phoneBean);
-            }
         }
 
         public void selectCity(){
@@ -284,6 +266,9 @@ public class CalllogActivity extends AppCompatActivity {
 
 
     private void readExcel(String fileName) {
+        List<String> phoneList = new ArrayList<>();
+
+        //将符合条件的电话号码读取到phoneList中
         try {
             InputStream inputStream = getAssets().open(fileName);
             XSSFWorkbook workbook;
@@ -301,12 +286,36 @@ public class CalllogActivity extends AppCompatActivity {
                 Row row = sheet.getRow(r);
                 CellValue v0 = formulaEvaluator.evaluate(row.getCell(0));
                 CellValue v1 = formulaEvaluator.evaluate(row.getCell(1));
+                if (v0.getStringValue().equals(myCity)){
+                    phoneList.add(v1.getStringValue());
+                }
+
                 Log.d("Excel", "readExcel: " + v0.getStringValue() + "-" + v1.getStringValue());
             }
             workbook.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        //从中随机选取几条来生成电话号码
+        for (int i = 0; i<Integer.parseInt(ACallBin.edtNum.getText().toString()); i++){
+                int index = getRandom(phoneList.size());
+                String phone = phoneList.get(index)+getRandom(10)+getRandom(10)+getRandom(10)+getRandom(10);
+
+                PhoneBean phoneBean = new PhoneBean();
+                phoneBean.setNumber(phone);
+                phoneBean.setDate(nowTime);
+
+                int callTime = getRandom(180)+10;
+                phoneBean.setDuration(String.valueOf(callTime));
+                nowTime = nowTime + callTime * 1000 + 60000;
+
+                phoneBean.setType("2");
+                phoneBean.setTypenew("0");
+
+                createCallLog(phoneBean);
+        }
+
     }
 
 
