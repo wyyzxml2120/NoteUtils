@@ -52,11 +52,10 @@ import java.util.Random;
 public class CalllogActivity extends AppCompatActivity {
 
     private ActivityCalllogBinding ACallBin;
-    private List<String> phoneList = new ArrayList<>();
     private long nowTime;
 
-    private String myProvince;//选择的省
-    private String myCity;//选择的市
+    private String myProvince = "四川";//选择的省
+    private String myCity = "成都";//选择的市
 
     CityPickerView mPicker=new CityPickerView();
 
@@ -69,7 +68,7 @@ public class CalllogActivity extends AppCompatActivity {
         //预先加载仿iOS滚轮实现的全部数据
         mPicker.init(this);
 
-        //readExcel("phone.xlsx");
+        init();
     }
 
     private void init(){
@@ -243,9 +242,10 @@ public class CalllogActivity extends AppCompatActivity {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void onSelected(ProvinceBean province, CityBean city, DistrictBean district) {
-                    myProvince = province.getName();
-                    myCity = city.getName();
+                    myProvince = province.getName().substring(0,province.getName().length()-1);
+                    myCity = city.getName().substring(0,city.getName().length()-1);
                     ACallBin.edtAddress.setText(province.getName()+"-"+city.getName());
+                    Log.d("abcd",myProvince+"-"+myCity);
                 }
 
                 @Override
@@ -286,11 +286,11 @@ public class CalllogActivity extends AppCompatActivity {
                 Row row = sheet.getRow(r);
                 CellValue v0 = formulaEvaluator.evaluate(row.getCell(0));
                 CellValue v1 = formulaEvaluator.evaluate(row.getCell(1));
-                if (v0.getStringValue().equals(myCity)){
-                    phoneList.add(v1.getStringValue());
+                if (v1.getStringValue().equals(myCity)){
+                    phoneList.add(String.valueOf((long)v0.getNumberValue()));
                 }
 
-                Log.d("Excel", "readExcel: " + v0.getStringValue() + "-" + v1.getStringValue());
+                Log.d("abcd", "readExcel: " + v0.getStringValue() + "-" + v1.getStringValue());
             }
             workbook.close();
         } catch (IOException e) {
@@ -298,7 +298,9 @@ public class CalllogActivity extends AppCompatActivity {
         }
 
         //从中随机选取几条来生成电话号码
-        for (int i = 0; i<Integer.parseInt(ACallBin.edtNum.getText().toString()); i++){
+
+
+        for (int i = 0; i<Integer.parseInt(ACallBin.edtTimes.getText().toString()); i++){
                 int index = getRandom(phoneList.size());
                 String phone = phoneList.get(index)+getRandom(10)+getRandom(10)+getRandom(10)+getRandom(10);
 
